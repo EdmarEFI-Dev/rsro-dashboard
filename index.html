@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>RSRO Dashboard</title>
+
+    <style>
+        body {
+            font-family: Segoe UI;
+            background: #f4f6f9;
+            padding: 30px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 220px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+        }
+
+        .number {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .label {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>RSRO Accounting Dashboard</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <div id="pending" class="number">0</div>
+            <div class="label">Hunyo Pending</div>
+        </div>
+
+        <div class="card">
+            <div id="uploaded" class="number">0</div>
+            <div class="label">Hunyo Uploaded</div>
+        </div>
+
+        <div class="card">
+            <div id="awaiting" class="number">0</div>
+            <div class="label">Awaiting</div>
+        </div>
+
+        <div class="card">
+            <div id="complete" class="number">0</div>
+            <div class="label">Complete</div>
+        </div>
+
+    </div>
+
+    <br>
+
+    Last Updated:
+    <span id="updated"></span>
+
+    <script>
+
+        async function loadData() {
+
+            const response =
+                await fetch("dashboard-data.json");
+
+            const data =
+                await response.json();
+
+            document.getElementById("pending").innerText =
+                data.hunyoPending;
+
+            document.getElementById("uploaded").innerText =
+                data.hunyoUploaded;
+
+            document.getElementById("awaiting").innerText =
+                data.awaiting;
+
+            document.getElementById("complete").innerText =
+                data.complete;
+
+            document.getElementById("updated").innerText =
+                data.lastUpdated;
+        }
+
+        loadData();
+
+        setInterval(loadData, 30000);
+
+    </script>
+
+</body>
+
+</html>
